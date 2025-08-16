@@ -315,7 +315,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <job_object_id/>
-      <filename>C:\Users\kauã\Desktop\gerenciamento de banco de dados\trab_03\KJB - 001 - GERAR_BASES.kjb</filename>
+      <filename>${Internal.Entry.Current.Directory}\KJB - 001 - GERAR_BASES.kjb</filename>
       <jobname/>
       <directory/>
       <arg_from_previous>N</arg_from_previous>
@@ -352,7 +352,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <job_object_id/>
-      <filename>C:\Users\kauã\Desktop\gerenciamento de banco de dados\trab_03\KJB - 002 - CARGA_DW.kjb</filename>
+      <filename>${Internal.Entry.Current.Directory}\KJB - 002 - CARGA_DW.kjb</filename>
       <jobname/>
       <directory/>
       <arg_from_previous>N</arg_from_previous>

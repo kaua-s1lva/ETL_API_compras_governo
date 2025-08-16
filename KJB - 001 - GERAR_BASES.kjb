@@ -294,7 +294,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <job_object_id/>
-      <filename>C:\Users\kauã\Desktop\gerenciamento de banco de dados\trab_03\KJB - 001 - MATERIAL.kjb</filename>
+      <filename>${Internal.Entry.Current.Directory}\KJB - 001 - MATERIAL.kjb</filename>
       <jobname/>
       <directory/>
       <arg_from_previous>N</arg_from_previous>
@@ -365,7 +365,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <job_object_id/>
-      <filename>C:\Users\kauã\Desktop\gerenciamento de banco de dados\trab_03\KJB - 002 - SERVICO.kjb</filename>
+      <filename>${Internal.Entry.Current.Directory}\KJB - 002 - SERVICO.kjb</filename>
       <jobname/>
       <directory/>
       <arg_from_previous>N</arg_from_previous>
@@ -402,7 +402,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <job_object_id/>
-      <filename>C:\Users\kauã\Desktop\gerenciamento de banco de dados\trab_03\KJB - 003 - PRECO.kjb</filename>
+      <filename>${Internal.Entry.Current.Directory}\KJB - 003 - PRECO.kjb</filename>
       <jobname/>
       <directory/>
       <arg_from_previous>N</arg_from_previous>
@@ -439,7 +439,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <job_object_id/>
-      <filename>C:\Users\kauã\Desktop\gerenciamento de banco de dados\trab_03\KJB - 004 - PGC.kjb</filename>
+      <filename>${Internal.Entry.Current.Directory}\KJB - 004 - PGC.kjb</filename>
       <jobname/>
       <directory/>
       <arg_from_previous>N</arg_from_previous>
@@ -476,7 +476,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <job_object_id/>
-      <filename>C:\Users\kauã\Desktop\gerenciamento de banco de dados\trab_03\KJB - 005 - UASG.kjb</filename>
+      <filename>${Internal.Entry.Current.Directory}\KJB - 005 - UASG.kjb</filename>
       <jobname/>
       <directory/>
       <arg_from_previous>N</arg_from_previous>
@@ -513,7 +513,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <job_object_id/>
-      <filename>C:\Users\kauã\Desktop\gerenciamento de banco de dados\trab_03\KJB - 006 - LEGADO.kjb</filename>
+      <filename>${Internal.Entry.Current.Directory}\KJB - 006 - LEGADO.kjb</filename>
       <jobname/>
       <directory/>
       <arg_from_previous>N</arg_from_previous>
@@ -550,7 +550,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <job_object_id/>
-      <filename>C:\Users\kauã\Desktop\gerenciamento de banco de dados\trab_03\KJB - 007 - CONTRATACAO.kjb</filename>
+      <filename>${Internal.Entry.Current.Directory}\KJB - 007 - CONTRATACAO.kjb</filename>
       <jobname/>
       <directory/>
       <arg_from_previous>N</arg_from_previous>
@@ -587,7 +587,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <job_object_id/>
-      <filename>C:\Users\kauã\Desktop\gerenciamento de banco de dados\trab_03\KJB - 008 - ARP.kjb</filename>
+      <filename>${Internal.Entry.Current.Directory}\KJB - 008 - ARP.kjb</filename>
       <jobname/>
       <directory/>
       <arg_from_previous>N</arg_from_previous>
@@ -624,7 +624,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <job_object_id/>
-      <filename>C:\Users\kauã\Desktop\gerenciamento de banco de dados\trab_03\KJB - 009 - CONTRATO.kjb</filename>
+      <filename>${Internal.Entry.Current.Directory}\KJB - 009 - CONTRATO.kjb</filename>
       <jobname/>
       <directory/>
       <arg_from_previous>N</arg_from_previous>
@@ -661,7 +661,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <job_object_id/>
-      <filename>C:\Users\kauã\Desktop\gerenciamento de banco de dados\trab_03\KJB - 010 - FORNECEDOR.kjb</filename>
+      <filename>${Internal.Entry.Current.Directory}\KJB - 010 - FORNECEDOR.kjb</filename>
       <jobname/>
       <directory/>
       <arg_from_previous>N</arg_from_previous>
