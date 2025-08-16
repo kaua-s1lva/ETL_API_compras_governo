@@ -504,158 +504,13 @@
   </connection>
   <order>
     <hop>
-      <from>input_tbl_008_secao_servico</from>
-      <to>Sort rows</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>input_tbl_009_divisao_servico</from>
-      <to>Sort rows 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Sort rows 2</from>
-      <to>Merge join</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Sort rows</from>
-      <to>Merge join</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Merge join</from>
-      <to>Sort rows 3</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>input_tbl_010_grupo_servico</from>
-      <to>Sort rows 4</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Sort rows 3</from>
-      <to>Merge join 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Sort rows 4</from>
-      <to>Merge join 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Merge join 2</from>
-      <to>Sort rows 5</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>input_tbl_011_classe_servico</from>
-      <to>Sort rows 6</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Sort rows 5</from>
-      <to>Merge join 3</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Sort rows 6</from>
-      <to>Merge join 3</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Merge join 3</from>
-      <to>Sort rows 7</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>input_tbl_012_subclasse_servico</from>
-      <to>Sort rows 8</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Sort rows 7</from>
-      <to>Merge join 4</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Sort rows 8</from>
-      <to>Merge join 4</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Merge join 4</from>
-      <to>Sort rows 9</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>input_tbl_013_item_servico</from>
-      <to>Sort rows 10</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Sort rows 10</from>
-      <to>Merge join 5</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Sort rows 9</from>
-      <to>Merge join 5</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>input_tbl_014_und_medida_servico</from>
-      <to>Sort rows 11</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Merge join 5</from>
-      <to>Sort rows 12</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Sort rows 12</from>
-      <to>Merge join 6</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Sort rows 11</from>
-      <to>Merge join 6</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Merge join 6</from>
-      <to>Sort rows 13</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>input_tbl_015_natureza_despesa_servico</from>
-      <to>Sort rows 14</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Sort rows 13</from>
-      <to>Merge join 7</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Sort rows 14</from>
-      <to>Merge join 7</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Merge join 7</from>
-      <to>Select values</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Select values</from>
+      <from>INPUT_TBL_*_SERVICO</from>
       <to>DIM_003_SERVICO</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>input_tbl_008_secao_servico</name>
+    <name>INPUT_TBL_*_SERVICO</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -667,10 +522,32 @@
     </partitioning>
     <connection>dw_gastos_governo</connection>
     <sql>SELECT
-  codigoSecao
-, nomeSecao
-FROM inputs.input_tbl_008_secao_servico
-</sql>
+  secao.nomeSecao
+, divisao.nomeDivisao
+, grupo.nomeGrupo
+, classe.nomeClasse
+, subclasse.nomeSubclasse
+, item.nomeServico
+, item.codigoCpc
+, item.exclusivoCentralCompras
+, und_medida.siglaUnidadeMedida
+, und_medida.nomeUnidadeMedida
+, natureza.nomeNaturezaDespesa
+FROM inputs.input_tbl_008_secao_servico secao
+LEFT JOIN inputs.input_tbl_009_divisao_servico divisao
+	ON divisao.codigoSecao = secao.codigoSecao
+LEFT JOIN inputs.input_tbl_010_grupo_servico grupo
+	ON grupo.codigoDivisao = divisao.codigoDivisao
+LEFT JOIN inputs.input_tbl_011_classe_servico classe
+	ON classe.codigoGrupo = grupo.codigoGrupo
+LEFT JOIN inputs.input_tbl_012_subclasse_servico subclasse
+	ON subclasse.codigoClasse = classe.codigoClasse
+LEFT JOIN inputs.input_tbl_013_item_servico item
+	ON item.codigoSubclasse = subclasse.codigoSubclasse
+LEFT JOIN inputs.input_tbl_014_und_medida_servico und_medida
+	ON und_medida.codigoServico = item.codigoServico
+LEFT JOIN inputs.input_tbl_015_natureza_despesa_servico natureza
+	ON natureza.codigoServico = item.codigoServico;</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -678,124 +555,15 @@ FROM inputs.input_tbl_008_secao_servico
     <lazy_conversion_active>N</lazy_conversion_active>
     <cached_row_meta_active>N</cached_row_meta_active>
     <row-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>codigoSecao</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Table input</origin>
-        <comments>codigoSecao</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>pt_BR</date_format_locale>
-        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>nomeSecao</name>
-        <length>1000</length>
+        <length>63</length>
         <precision>-1</precision>
-        <origin>Table input</origin>
+        <origin>input_tbl_*_servico</origin>
         <comments>nomeSecao</comments>
         <conversion_Mask/>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>pt_BR</date_format_locale>
-        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-    </row-meta>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>96</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>input_tbl_009_divisao_servico</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>dw_gastos_governo</connection>
-    <sql>SELECT
-  codigoSecao
-, codigoDivisao
-, nomeDivisao
-FROM inputs.input_tbl_009_divisao_servico
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>codigoSecao</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>input_tbl_009_divisao_servico</origin>
-        <comments>codigoSecao</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>pt_BR</date_format_locale>
-        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>codigoDivisao</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>input_tbl_009_divisao_servico</origin>
-        <comments>codigoDivisao</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>,</decimal_symbol>
         <grouping_symbol>.</grouping_symbol>
         <currency_symbol/>
@@ -816,204 +584,9 @@ FROM inputs.input_tbl_009_divisao_servico
         <name>nomeDivisao</name>
         <length>1000</length>
         <precision>-1</precision>
-        <origin>input_tbl_009_divisao_servico</origin>
+        <origin>input_tbl_*_servico</origin>
         <comments>nomeDivisao</comments>
         <conversion_Mask/>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>pt_BR</date_format_locale>
-        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-    </row-meta>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>304</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>input_tbl_011_classe_servico</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>dw_gastos_governo</connection>
-    <sql>SELECT
-  codigoGrupo
-, codigoClasse
-, nomeClasse
-FROM inputs.input_tbl_011_classe_servico
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>codigoGrupo</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>input_tbl_009_divisao_servico 2</origin>
-        <comments>codigoGrupo</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>pt_BR</date_format_locale>
-        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>codigoClasse</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>input_tbl_009_divisao_servico 2</origin>
-        <comments>codigoClasse</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>pt_BR</date_format_locale>
-        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>nomeClasse</name>
-        <length>1000</length>
-        <precision>-1</precision>
-        <origin>input_tbl_009_divisao_servico 2</origin>
-        <comments>nomeClasse</comments>
-        <conversion_Mask/>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>pt_BR</date_format_locale>
-        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-    </row-meta>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>720</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>input_tbl_010_grupo_servico</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>dw_gastos_governo</connection>
-    <sql>SELECT
-  codigoDivisao
-, codigoGrupo
-, nomeGrupo
-FROM inputs.input_tbl_010_grupo_servico
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>codigoDivisao</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>input_tbl_009_divisao_servico 3</origin>
-        <comments>codigoDivisao</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>pt_BR</date_format_locale>
-        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>codigoGrupo</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>input_tbl_009_divisao_servico 3</origin>
-        <comments>codigoGrupo</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>,</decimal_symbol>
         <grouping_symbol>.</grouping_symbol>
         <currency_symbol/>
@@ -1034,7 +607,7 @@ FROM inputs.input_tbl_010_grupo_servico
         <name>nomeGrupo</name>
         <length>1000</length>
         <precision>-1</precision>
-        <origin>input_tbl_009_divisao_servico 3</origin>
+        <origin>input_tbl_*_servico</origin>
         <comments>nomeGrupo</comments>
         <conversion_Mask/>
         <decimal_symbol>,</decimal_symbol>
@@ -1051,78 +624,15 @@ FROM inputs.input_tbl_010_grupo_servico
         <date_format_timezone>America/Sao_Paulo</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
-    </row-meta>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>512</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>input_tbl_012_subclasse_servico</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>dw_gastos_governo</connection>
-    <sql>SELECT
-  codigoClasse
-, codigoSubclasse
-, nomeSubclasse
-FROM inputs.input_tbl_012_subclasse_servico
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta>
       <value-meta>
-        <type>Integer</type>
+        <type>String</type>
         <storagetype>normal</storagetype>
-        <name>codigoClasse</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>input_tbl_009_divisao_servico 4</origin>
-        <comments>codigoClasse</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>pt_BR</date_format_locale>
-        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>codigoSubclasse</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>input_tbl_009_divisao_servico 4</origin>
-        <comments>codigoSubclasse</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
+        <name>nomeClasse</name>
+        <length>1000</length>
+        <precision>-1</precision>
+        <origin>input_tbl_*_servico</origin>
+        <comments>nomeClasse</comments>
+        <conversion_Mask/>
         <decimal_symbol>,</decimal_symbol>
         <grouping_symbol>.</grouping_symbol>
         <currency_symbol/>
@@ -1143,193 +653,9 @@ FROM inputs.input_tbl_012_subclasse_servico
         <name>nomeSubclasse</name>
         <length>1000</length>
         <precision>-1</precision>
-        <origin>input_tbl_009_divisao_servico 4</origin>
+        <origin>input_tbl_*_servico</origin>
         <comments>nomeSubclasse</comments>
         <conversion_Mask/>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>pt_BR</date_format_locale>
-        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-    </row-meta>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>928</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>input_tbl_013_item_servico</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>dw_gastos_governo</connection>
-    <sql>SELECT
-  codigoSecao
-, codigoDivisao
-, codigoGrupo
-, codigoClasse
-, codigoSubclasse
-, codigoServico
-, nomeServico
-, codigoCpc
-, exclusivoCentralCompras
-FROM inputs.input_tbl_013_item_servico
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>codigoSecao</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>input_tbl_013_item_servico</origin>
-        <comments>codigoSecao</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>pt_BR</date_format_locale>
-        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>codigoDivisao</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>input_tbl_013_item_servico</origin>
-        <comments>codigoDivisao</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>pt_BR</date_format_locale>
-        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>codigoGrupo</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>input_tbl_013_item_servico</origin>
-        <comments>codigoGrupo</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>pt_BR</date_format_locale>
-        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>codigoClasse</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>input_tbl_013_item_servico</origin>
-        <comments>codigoClasse</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>pt_BR</date_format_locale>
-        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>codigoSubclasse</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>input_tbl_013_item_servico</origin>
-        <comments>codigoSubclasse</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>pt_BR</date_format_locale>
-        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>codigoServico</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>input_tbl_013_item_servico</origin>
-        <comments>codigoServico</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>,</decimal_symbol>
         <grouping_symbol>.</grouping_symbol>
         <currency_symbol/>
@@ -1350,7 +676,7 @@ FROM inputs.input_tbl_013_item_servico
         <name>nomeServico</name>
         <length>1000</length>
         <precision>-1</precision>
-        <origin>input_tbl_013_item_servico</origin>
+        <origin>input_tbl_*_servico</origin>
         <comments>nomeServico</comments>
         <conversion_Mask/>
         <decimal_symbol>,</decimal_symbol>
@@ -1373,7 +699,7 @@ FROM inputs.input_tbl_013_item_servico
         <name>codigoCpc</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>input_tbl_013_item_servico</origin>
+        <origin>input_tbl_*_servico</origin>
         <comments>codigoCpc</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>,</decimal_symbol>
@@ -1396,72 +722,9 @@ FROM inputs.input_tbl_013_item_servico
         <name>exclusivoCentralCompras</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>input_tbl_013_item_servico</origin>
+        <origin>input_tbl_*_servico</origin>
         <comments>exclusivoCentralCompras</comments>
         <conversion_Mask/>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>pt_BR</date_format_locale>
-        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-    </row-meta>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1136</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>input_tbl_014_und_medida_servico</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>dw_gastos_governo</connection>
-    <sql>SELECT
-  codigoServico
-, siglaUnidadeMedida
-, nomeUnidadeMedida
-FROM inputs.input_tbl_014_und_medida_servico
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>codigoServico</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>input_tbl_009_divisao_servico 5 2</origin>
-        <comments>codigoServico</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>,</decimal_symbol>
         <grouping_symbol>.</grouping_symbol>
         <currency_symbol/>
@@ -1482,7 +745,7 @@ FROM inputs.input_tbl_014_und_medida_servico
         <name>siglaUnidadeMedida</name>
         <length>50</length>
         <precision>-1</precision>
-        <origin>input_tbl_009_divisao_servico 5 2</origin>
+        <origin>input_tbl_*_servico</origin>
         <comments>siglaUnidadeMedida</comments>
         <conversion_Mask/>
         <decimal_symbol>,</decimal_symbol>
@@ -1505,95 +768,9 @@ FROM inputs.input_tbl_014_und_medida_servico
         <name>nomeUnidadeMedida</name>
         <length>100</length>
         <precision>-1</precision>
-        <origin>input_tbl_009_divisao_servico 5 2</origin>
+        <origin>input_tbl_*_servico</origin>
         <comments>nomeUnidadeMedida</comments>
         <conversion_Mask/>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>pt_BR</date_format_locale>
-        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-    </row-meta>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1344</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>input_tbl_015_natureza_despesa_servico</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>dw_gastos_governo</connection>
-    <sql>SELECT
-  codigoServico
-, codigoNaturezaDespesa
-, nomeNaturezaDespesa
-FROM inputs.input_tbl_015_natureza_despesa_servico
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>codigoServico</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>input_tbl_015_natureza_despesa_servico</origin>
-        <comments>codigoServico</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>pt_BR</date_format_locale>
-        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>codigoNaturezaDespesa</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>input_tbl_015_natureza_despesa_servico</origin>
-        <comments>codigoNaturezaDespesa</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>,</decimal_symbol>
         <grouping_symbol>.</grouping_symbol>
         <currency_symbol/>
@@ -1614,7 +791,7 @@ FROM inputs.input_tbl_015_natureza_despesa_servico
         <name>nomeNaturezaDespesa</name>
         <length>16383</length>
         <precision>-1</precision>
-        <origin>input_tbl_015_natureza_despesa_servico</origin>
+        <origin>input_tbl_*_servico</origin>
         <comments>nomeNaturezaDespesa</comments>
         <conversion_Mask/>
         <decimal_symbol>,</decimal_symbol>
@@ -1641,902 +818,8 @@ FROM inputs.input_tbl_015_natureza_despesa_servico
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1568</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Sort rows</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>codigoSecao</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>96</xloc>
-      <yloc>352</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Sort rows 2</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>codigoSecao</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>304</xloc>
-      <yloc>224</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Merge join</name>
-    <type>MergeJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <join_type>FULL OUTER</join_type>
-    <step1>Sort rows 2</step1>
-    <step2>Sort rows</step2>
-    <keys_1>
-      <key>codigoSecao</key>
-    </keys_1>
-    <keys_2>
-      <key>codigoSecao</key>
-    </keys_2>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>304</xloc>
-      <yloc>352</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Sort rows 3</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>codigoDivisao</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>304</xloc>
-      <yloc>496</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Sort rows 4</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>codigoDivisao</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>512</xloc>
-      <yloc>288</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Merge join 2</name>
-    <type>MergeJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <join_type>FULL OUTER</join_type>
-    <step1>Sort rows 3</step1>
-    <step2>Sort rows 4</step2>
-    <keys_1>
-      <key>codigoDivisao</key>
-    </keys_1>
-    <keys_2>
-      <key>codigoDivisao</key>
-    </keys_2>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>512</xloc>
-      <yloc>496</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Sort rows 5</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>codigoGrupo</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>512</xloc>
-      <yloc>640</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Sort rows 6</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>codigoGrupo</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>720</xloc>
-      <yloc>368</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Merge join 3</name>
-    <type>MergeJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <join_type>FULL OUTER</join_type>
-    <step1>Sort rows 5</step1>
-    <step2>Sort rows 6</step2>
-    <keys_1>
-      <key>codigoGrupo</key>
-    </keys_1>
-    <keys_2>
-      <key>codigoGrupo</key>
-    </keys_2>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>720</xloc>
-      <yloc>640</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Sort rows 7</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>codigoClasse</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>720</xloc>
-      <yloc>784</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Sort rows 8</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>codigoClasse</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>928</xloc>
-      <yloc>464</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Merge join 4</name>
-    <type>MergeJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <join_type>FULL OUTER</join_type>
-    <step1>Sort rows 7</step1>
-    <step2>Sort rows 8</step2>
-    <keys_1>
-      <key>codigoClasse</key>
-    </keys_1>
-    <keys_2>
-      <key>codigoClasse</key>
-    </keys_2>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>928</xloc>
-      <yloc>784</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Sort rows 9</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>codigoSubclasse</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>928</xloc>
-      <yloc>944</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Sort rows 10</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>codigoSubclasse</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1136</xloc>
-      <yloc>592</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Merge join 5</name>
-    <type>MergeJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <join_type>FULL OUTER</join_type>
-    <step1>Sort rows 10</step1>
-    <step2>Sort rows 9</step2>
-    <keys_1>
-      <key>codigoSubclasse</key>
-    </keys_1>
-    <keys_2>
-      <key>codigoSubclasse</key>
-    </keys_2>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1136</xloc>
-      <yloc>944</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Sort rows 11</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1344</xloc>
-      <yloc>736</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Sort rows 12</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1136</xloc>
-      <yloc>1088</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Merge join 6</name>
-    <type>MergeJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <join_type>FULL OUTER</join_type>
-    <step1>Sort rows 12</step1>
-    <step2>Sort rows 11</step2>
-    <keys_1>
-      <key>codigoServico</key>
-    </keys_1>
-    <keys_2>
-      <key>codigoServico</key>
-    </keys_2>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1344</xloc>
-      <yloc>1088</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Sort rows 13</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1344</xloc>
-      <yloc>1232</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Sort rows 14</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1568</xloc>
-      <yloc>928</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Merge join 7</name>
-    <type>MergeJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <join_type>FULL OUTER</join_type>
-    <step1>Sort rows 13</step1>
-    <step2>Sort rows 14</step2>
-    <keys_1>
-      <key>codigoServico</key>
-    </keys_1>
-    <keys_2>
-      <key>codigoServico</key>
-    </keys_2>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1568</xloc>
-      <yloc>1232</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Select values</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>codigoSecao</name>
-        <rename/>
-      </field>
-      <field>
-        <name>codigoDivisao</name>
-        <rename/>
-      </field>
-      <field>
-        <name>codigoGrupo</name>
-        <rename/>
-      </field>
-      <field>
-        <name>codigoClasse</name>
-        <rename/>
-      </field>
-      <field>
-        <name>codigoSubclasse</name>
-        <rename/>
-      </field>
-      <field>
-        <name>codigoServico</name>
-        <rename/>
-      </field>
-      <field>
-        <name>codigoNaturezaDespesa</name>
-        <rename/>
-      </field>
-      <field>
-        <name>nomeServico</name>
-        <rename/>
-      </field>
-      <field>
-        <name>codigoCpc</name>
-        <rename/>
-      </field>
-      <field>
-        <name>exclusivoCentralCompras</name>
-        <rename/>
-      </field>
-      <field>
-        <name>nomeDivisao</name>
-        <rename/>
-      </field>
-      <field>
-        <name>nomeSecao</name>
-        <rename/>
-      </field>
-      <field>
-        <name>nomeGrupo</name>
-        <rename/>
-      </field>
-      <field>
-        <name>nomeClasse</name>
-        <rename/>
-      </field>
-      <field>
-        <name>nomeSubclasse</name>
-        <rename/>
-      </field>
-      <field>
-        <name>siglaUnidadeMedida</name>
-        <rename/>
-      </field>
-      <field>
-        <name>nomeUnidadeMedida</name>
-        <rename/>
-      </field>
-      <field>
-        <name>nomeNaturezaDespesa</name>
-        <rename/>
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1568</xloc>
-      <yloc>1408</yloc>
+      <xloc>176</xloc>
+      <yloc>80</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2570,52 +853,12 @@ FROM inputs.input_tbl_015_natureza_despesa_servico
     <return_field/>
     <fields>
       <field>
-        <column_name>codigoSecao</column_name>
-        <stream_name>codigoSecao</stream_name>
-      </field>
-      <field>
-        <column_name>codigoDivisao</column_name>
-        <stream_name>codigoDivisao</stream_name>
-      </field>
-      <field>
-        <column_name>codigoGrupo</column_name>
-        <stream_name>codigoGrupo</stream_name>
-      </field>
-      <field>
-        <column_name>codigoClasse</column_name>
-        <stream_name>codigoClasse</stream_name>
-      </field>
-      <field>
-        <column_name>codigoSubclasse</column_name>
-        <stream_name>codigoSubclasse</stream_name>
-      </field>
-      <field>
-        <column_name>codigoServico</column_name>
-        <stream_name>codigoServico</stream_name>
-      </field>
-      <field>
-        <column_name>codigoNaturezaDespesa</column_name>
-        <stream_name>codigoNaturezaDespesa</stream_name>
-      </field>
-      <field>
-        <column_name>nomeServico</column_name>
-        <stream_name>nomeServico</stream_name>
-      </field>
-      <field>
-        <column_name>codigoCpc</column_name>
-        <stream_name>codigoCpc</stream_name>
-      </field>
-      <field>
-        <column_name>exclusivoCentralCompras</column_name>
-        <stream_name>exclusivoCentralCompras</stream_name>
+        <column_name>nomeSecao</column_name>
+        <stream_name>nomeSecao</stream_name>
       </field>
       <field>
         <column_name>nomeDivisao</column_name>
         <stream_name>nomeDivisao</stream_name>
-      </field>
-      <field>
-        <column_name>nomeSecao</column_name>
-        <stream_name>nomeSecao</stream_name>
       </field>
       <field>
         <column_name>nomeGrupo</column_name>
@@ -2628,6 +871,18 @@ FROM inputs.input_tbl_015_natureza_despesa_servico
       <field>
         <column_name>nomeSubclasse</column_name>
         <stream_name>nomeSubclasse</stream_name>
+      </field>
+      <field>
+        <column_name>nomeServico</column_name>
+        <stream_name>nomeServico</stream_name>
+      </field>
+      <field>
+        <column_name>codigoCpc</column_name>
+        <stream_name>codigoCpc</stream_name>
+      </field>
+      <field>
+        <column_name>exclusivoCentralCompras</column_name>
+        <stream_name>exclusivoCentralCompras</stream_name>
       </field>
       <field>
         <column_name>siglaUnidadeMedida</column_name>
@@ -2651,8 +906,8 @@ FROM inputs.input_tbl_015_natureza_despesa_servico
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1568</xloc>
-      <yloc>1584</yloc>
+      <xloc>176</xloc>
+      <yloc>224</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
