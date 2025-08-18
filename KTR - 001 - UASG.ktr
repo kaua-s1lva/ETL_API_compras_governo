@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>KTR - 002 - COMPRA_DETALHE_MATERIAL</name>
+    <name>KTR - 001 - UASG</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -427,10 +427,10 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2025/08/16 18:56:57.128</created_date>
+    <created_date>2025/08/17 20:32:30.715</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2025/08/16 18:56:57.128</modified_date>
-    <key_for_session_key>H4sIAAAAAAAA/wMAAAAAAAAAAAA=</key_for_session_key>
+    <modified_date>2025/08/17 20:32:30.715</modified_date>
+    <key_for_session_key/>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
@@ -505,6 +505,11 @@
   <order>
     <hop>
       <from>Add constants</from>
+      <to>Calculator</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Add constants</from>
       <to>Select values</to>
       <enabled>N</enabled>
     </hop>
@@ -560,6 +565,11 @@
     </hop>
     <hop>
       <from>Select values 2 2 2 3</from>
+      <to>INPUT_TBL_021_UASG</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select values 2 2 2 3</from>
       <to>Select values 3</to>
       <enabled>N</enabled>
     </hop>
@@ -569,18 +579,13 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Table input</from>
+      <from>Generate rows 2</from>
       <to>Add constants</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Add constants</from>
-      <to>Calculator</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Select values 2 2 2 3</from>
-      <to>INPUT_TBL_017_COMPRA_DETALHE_MATERIAL</to>
+      <from>Generate rows</from>
+      <to>Add constants</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -603,7 +608,7 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>https://dadosabertos.compras.gov.br/modulo-pesquisa-preco/2_consultarMaterialDetalhe?tamanhoPagina=500&amp;idCompra=</nullif>
+        <nullif>https://dadosabertos.compras.gov.br/modulo-uasg/1_consultarUasg?tamanhoPagina=500&amp;statusUasg=</nullif>
         <length>-1</length>
         <precision>-1</precision>
         <set_empty_string>N</set_empty_string>
@@ -618,8 +623,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>109</xloc>
-      <yloc>246</yloc>
+      <xloc>128</xloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -639,7 +644,7 @@
       <field_name>url_item</field_name>
       <calc_type>ADD</calc_type>
       <field_a>url</field_a>
-      <field_b>idCompra</field_b>
+      <field_b>boolean</field_b>
       <field_c/>
       <value_type>String</value_type>
       <value_length>-1</value_length>
@@ -659,8 +664,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>445</xloc>
-      <yloc>246</yloc>
+      <xloc>464</xloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -691,8 +696,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1293</xloc>
-      <yloc>390</yloc>
+      <xloc>1312</xloc>
+      <yloc>384</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -735,8 +740,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1293</xloc>
-      <yloc>246</yloc>
+      <xloc>1312</xloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -779,8 +784,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1133</xloc>
-      <yloc>390</yloc>
+      <xloc>1152</xloc>
+      <yloc>384</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -823,13 +828,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>973</xloc>
-      <yloc>246</yloc>
+      <xloc>992</xloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>INPUT_TBL_017_COMPRA_DETALHE_MATERIAL</name>
+    <name>INPUT_TBL_021_UASG</name>
     <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -841,7 +846,7 @@
     </partitioning>
     <connection>inputs</connection>
     <schema/>
-    <table>INPUT_TBL_017_COMPRA_DETALHE_MATERIAL</table>
+    <table>INPUT_TBL_021_UASG</table>
     <commit>1000</commit>
     <truncate>Y</truncate>
     <ignore_errors>N</ignore_errors>
@@ -858,28 +863,92 @@
     <return_field/>
     <fields>
       <field>
-        <column_name>idCompra</column_name>
-        <stream_name>idCompra</stream_name>
+        <column_name>codigoUasg</column_name>
+        <stream_name>codigoUasg</stream_name>
       </field>
       <field>
-        <column_name>idItemCompra</column_name>
-        <stream_name>idItemCompra</stream_name>
+        <column_name>nomeUasg</column_name>
+        <stream_name>nomeUasg</stream_name>
       </field>
       <field>
-        <column_name>numeroItemCompra</column_name>
-        <stream_name>numeroItemCompra</stream_name>
+        <column_name>usoSisg</column_name>
+        <stream_name>usoSisg</stream_name>
       </field>
       <field>
-        <column_name>codigoItemCatalogo</column_name>
-        <stream_name>codigoItemCatalogo</stream_name>
+        <column_name>adesaoSiasg</column_name>
+        <stream_name>adesaoSiasg</stream_name>
       </field>
       <field>
-        <column_name>objetoCompra</column_name>
-        <stream_name>objetoCompra</stream_name>
+        <column_name>siglaUf</column_name>
+        <stream_name>siglaUf</stream_name>
       </field>
       <field>
-        <column_name>descricaoDetalhadaItem</column_name>
-        <stream_name>descricaoDetalhadaItem</stream_name>
+        <column_name>codigoMunicipio</column_name>
+        <stream_name>codigoMunicipio</stream_name>
+      </field>
+      <field>
+        <column_name>codigoMunicipioIbge</column_name>
+        <stream_name>codigoMunicipioIbge</stream_name>
+      </field>
+      <field>
+        <column_name>nomeMunicipioIbge</column_name>
+        <stream_name>nomeMunicipioIbge</stream_name>
+      </field>
+      <field>
+        <column_name>codigoUnidadePolo</column_name>
+        <stream_name>codigoUnidadePolo</stream_name>
+      </field>
+      <field>
+        <column_name>nomeUnidadePolo</column_name>
+        <stream_name>nomeUnidadePolo</stream_name>
+      </field>
+      <field>
+        <column_name>codigoUnidadeEspelho</column_name>
+        <stream_name>codigoUnidadeEspelho</stream_name>
+      </field>
+      <field>
+        <column_name>nomeUnidadeEspelho</column_name>
+        <stream_name>nomeUnidadeEspelho</stream_name>
+      </field>
+      <field>
+        <column_name>uasgCadastradora</column_name>
+        <stream_name>uasgCadastradora</stream_name>
+      </field>
+      <field>
+        <column_name>cnpjCpfUasg</column_name>
+        <stream_name>cnpjCpfUasg</stream_name>
+      </field>
+      <field>
+        <column_name>codigoOrgao</column_name>
+        <stream_name>codigoOrgao</stream_name>
+      </field>
+      <field>
+        <column_name>cnpjCpfOrgao</column_name>
+        <stream_name>cnpjCpfOrgao</stream_name>
+      </field>
+      <field>
+        <column_name>cnpjCpfOrgaoVinculado</column_name>
+        <stream_name>cnpjCpfOrgaoVinculado</stream_name>
+      </field>
+      <field>
+        <column_name>cnpjCpfOrgaoSuperior</column_name>
+        <stream_name>cnpjCpfOrgaoSuperior</stream_name>
+      </field>
+      <field>
+        <column_name>codigoSiorg</column_name>
+        <stream_name>codigoSiorg</stream_name>
+      </field>
+      <field>
+        <column_name>statusUasg</column_name>
+        <stream_name>statusUasg</stream_name>
+      </field>
+      <field>
+        <column_name>dataImplantacaoSidec</column_name>
+        <stream_name>dataImplantacaoSidec</stream_name>
+      </field>
+      <field>
+        <column_name>dataHoraMovimento</column_name>
+        <stream_name>dataHoraMovimento</stream_name>
       </field>
     </fields>
     <attributes/>
@@ -891,8 +960,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>128</xloc>
-      <yloc>400</yloc>
+      <xloc>144</xloc>
+      <yloc>384</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -928,8 +997,8 @@
     </file>
     <fields>
       <field>
-        <name>idCompra</name>
-        <path>$.resultado[*].idCompra</path>
+        <name>codigoUasg</name>
+        <path>$.resultado[*].codigoUasg</path>
         <type>String</type>
         <format/>
         <currency/>
@@ -941,47 +1010,8 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>idItemCompra</name>
-        <path>$.resultado[*].idItemCompra</path>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>numeroItemCompra</name>
-        <path>$.resultado[*].numeroItemCompra</path>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>codigoItemCatalogo</name>
-        <path>$.resultado[*].codigoItemCatalogo</path>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>objetoCompra</name>
-        <path>$.resultado[*].objetoCompra</path>
+        <name>nomeUasg</name>
+        <path>$.resultado[*].nomeUasg</path>
         <type>String</type>
         <format/>
         <currency/>
@@ -993,10 +1023,257 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>descricaoDetalhadaItem</name>
-        <path>$.resultado[*].descricaoDetalhadaItem</path>
+        <name>usoSisg</name>
+        <path>$.resultado[*].usoSisg</path>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>adesaoSiasg</name>
+        <path>$.resultado[*].adesaoSiasg</path>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>siglaUf</name>
+        <path>$.resultado[*].siglaUf</path>
         <type>String</type>
         <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>codigoMunicipio</name>
+        <path>$.resultado[*].codigoMunicipio</path>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>codigoMunicipioIbge</name>
+        <path>$.resultado[*].codigoMunicipioIbge</path>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>nomeMunicipioIbge</name>
+        <path>$.resultado[*].nomeMunicipioIbge</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>codigoUnidadePolo</name>
+        <path>$.resultado[*].codigoUnidadePolo</path>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>nomeUnidadePolo</name>
+        <path>$.resultado[*].nomeUnidadePolo</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>codigoUnidadeEspelho</name>
+        <path>$.resultado[*].codigoUnidadeEspelho</path>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>nomeUnidadeEspelho</name>
+        <path>$.resultado[*].nomeUnidadeEspelho</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>uasgCadastradora</name>
+        <path>$.resultado[*].uasgCadastradora</path>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>cnpjCpfUasg</name>
+        <path>$.resultado[*].cnpjCpfUasg</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>codigoOrgao</name>
+        <path>$.resultado[*].codigoOrgao</path>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>cnpjCpfOrgao</name>
+        <path>$.resultado[*].cnpjCpfOrgao</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>cnpjCpfOrgaoVinculado</name>
+        <path>$.resultado[*].cnpjCpfOrgaoVinculado</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>cnpjCpfOrgaoSuperior</name>
+        <path>$.resultado[*].cnpjCpfOrgaoSuperior</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>codigoSiorg</name>
+        <path>$.resultado[*].codigoSiorg</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>statusUasg</name>
+        <path>$.resultado[*].statusUasg</path>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>dataImplantacaoSidec</name>
+        <path>$.resultado[*].dataImplantacaoSidec</path>
+        <type>Date</type>
+        <format>yyyy-MM-dd</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>dataHoraMovimento</name>
+        <path>$.resultado[*].dataHoraMovimento</path>
+        <type>Date</type>
+        <format>yyyy-MM-dd</format>
         <currency/>
         <decimal/>
         <group/>
@@ -1027,8 +1304,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>701</xloc>
-      <yloc>390</yloc>
+      <xloc>720</xloc>
+      <yloc>384</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1111,8 +1388,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1117</xloc>
-      <yloc>246</yloc>
+      <xloc>1136</xloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1147,8 +1424,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>781</xloc>
-      <yloc>246</yloc>
+      <xloc>800</xloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1192,7 +1469,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>288</xloc>
+      <xloc>304</xloc>
       <yloc>192</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1224,8 +1501,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>605</xloc>
-      <yloc>246</yloc>
+      <xloc>624</xloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1255,8 +1532,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>541</xloc>
-      <yloc>390</yloc>
+      <xloc>560</xloc>
+      <yloc>384</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1317,7 +1594,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>336</xloc>
+      <xloc>352</xloc>
       <yloc>336</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1349,14 +1626,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>973</xloc>
-      <yloc>390</yloc>
+      <xloc>992</xloc>
+      <yloc>384</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Table input</name>
-    <type>TableInput</type>
+    <name>Generate rows</name>
+    <type>RowGenerator</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1365,41 +1642,25 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>inputs</connection>
-    <sql>SELECT DISTINCT
-  idCompra
-FROM inputs.input_tbl_016_compra_material</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta>
-      <value-meta>
+    <fields>
+      <field>
+        <name>boolean</name>
         <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>idCompra</name>
-        <length>50</length>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>true</nullif>
+        <length>-1</length>
         <precision>-1</precision>
-        <origin>Table input</origin>
-        <comments>idCompra</comments>
-        <conversion_Mask/>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>pt_BR</date_format_locale>
-        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-    </row-meta>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <limit>1</limit>
+    <never_ending>N</never_ending>
+    <interval_in_ms>5000</interval_in_ms>
+    <row_time_field>now</row_time_field>
+    <last_time_field>FiveSecondsAgo</last_time_field>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1409,8 +1670,52 @@ FROM inputs.input_tbl_016_compra_material</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>109</xloc>
-      <yloc>102</yloc>
+      <xloc>48</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Generate rows 2</name>
+    <type>RowGenerator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>boolean</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>false</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <limit>1</limit>
+    <never_ending>N</never_ending>
+    <interval_in_ms>5000</interval_in_ms>
+    <row_time_field>now</row_time_field>
+    <last_time_field>FiveSecondsAgo</last_time_field>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>208</xloc>
+      <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

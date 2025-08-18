@@ -438,13 +438,13 @@
   </notepads>
   <connection>
     <name>inputs</name>
-    <server>localhost</server>
+    <server>26.107.162.77</server>
     <type>MYSQL</type>
     <access>Native</access>
     <database>inputs</database>
     <port>3306</port>
-    <username>root</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb79ce10cc9da0ce</password>
+    <username>maik.maifredo</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb14af79d5c3fd89</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>

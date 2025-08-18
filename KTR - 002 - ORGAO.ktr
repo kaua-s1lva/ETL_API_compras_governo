@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>KTR - 002 - COMPRA_DETALHE_MATERIAL</name>
+    <name>KTR - 002 - ORGAO</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -427,10 +427,10 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2025/08/16 18:56:57.128</created_date>
+    <created_date>2025/08/17 20:33:07.744</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2025/08/16 18:56:57.128</modified_date>
-    <key_for_session_key>H4sIAAAAAAAA/wMAAAAAAAAAAAA=</key_for_session_key>
+    <modified_date>2025/08/17 20:33:07.744</modified_date>
+    <key_for_session_key/>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
@@ -505,6 +505,11 @@
   <order>
     <hop>
       <from>Add constants</from>
+      <to>Calculator</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Add constants</from>
       <to>Select values</to>
       <enabled>N</enabled>
     </hop>
@@ -560,6 +565,11 @@
     </hop>
     <hop>
       <from>Select values 2 2 2 3</from>
+      <to>INPUT_TBL_022_ORGAO</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select values 2 2 2 3</from>
       <to>Select values 3</to>
       <enabled>N</enabled>
     </hop>
@@ -569,18 +579,13 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Table input</from>
+      <from>Generate rows</from>
       <to>Add constants</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Add constants</from>
-      <to>Calculator</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Select values 2 2 2 3</from>
-      <to>INPUT_TBL_017_COMPRA_DETALHE_MATERIAL</to>
+      <from>Generate rows 2</from>
+      <to>Add constants</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -603,7 +608,7 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>https://dadosabertos.compras.gov.br/modulo-pesquisa-preco/2_consultarMaterialDetalhe?tamanhoPagina=500&amp;idCompra=</nullif>
+        <nullif>https://dadosabertos.compras.gov.br/modulo-uasg/2_consultarOrgao?tamanhoPagina=500&amp;statusOrgao=</nullif>
         <length>-1</length>
         <precision>-1</precision>
         <set_empty_string>N</set_empty_string>
@@ -618,8 +623,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>109</xloc>
-      <yloc>246</yloc>
+      <xloc>144</xloc>
+      <yloc>288</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -639,7 +644,7 @@
       <field_name>url_item</field_name>
       <calc_type>ADD</calc_type>
       <field_a>url</field_a>
-      <field_b>idCompra</field_b>
+      <field_b>boolean</field_b>
       <field_c/>
       <value_type>String</value_type>
       <value_length>-1</value_length>
@@ -659,8 +664,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>445</xloc>
-      <yloc>246</yloc>
+      <xloc>480</xloc>
+      <yloc>288</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -691,8 +696,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1293</xloc>
-      <yloc>390</yloc>
+      <xloc>1328</xloc>
+      <yloc>432</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -735,8 +740,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1293</xloc>
-      <yloc>246</yloc>
+      <xloc>1328</xloc>
+      <yloc>288</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -779,8 +784,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1133</xloc>
-      <yloc>390</yloc>
+      <xloc>1168</xloc>
+      <yloc>432</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -823,13 +828,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>973</xloc>
-      <yloc>246</yloc>
+      <xloc>1008</xloc>
+      <yloc>288</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>INPUT_TBL_017_COMPRA_DETALHE_MATERIAL</name>
+    <name>INPUT_TBL_022_ORGAO</name>
     <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -841,7 +846,7 @@
     </partitioning>
     <connection>inputs</connection>
     <schema/>
-    <table>INPUT_TBL_017_COMPRA_DETALHE_MATERIAL</table>
+    <table>INPUT_TBL_022_ORGAO</table>
     <commit>1000</commit>
     <truncate>Y</truncate>
     <ignore_errors>N</ignore_errors>
@@ -858,28 +863,72 @@
     <return_field/>
     <fields>
       <field>
-        <column_name>idCompra</column_name>
-        <stream_name>idCompra</stream_name>
+        <column_name>codigoOrgao</column_name>
+        <stream_name>codigoOrgao</stream_name>
       </field>
       <field>
-        <column_name>idItemCompra</column_name>
-        <stream_name>idItemCompra</stream_name>
+        <column_name>nomeOrgao</column_name>
+        <stream_name>nomeOrgao</stream_name>
       </field>
       <field>
-        <column_name>numeroItemCompra</column_name>
-        <stream_name>numeroItemCompra</stream_name>
+        <column_name>nomeMnemonicoOrgao</column_name>
+        <stream_name>nomeMnemonicoOrgao</stream_name>
       </field>
       <field>
-        <column_name>codigoItemCatalogo</column_name>
-        <stream_name>codigoItemCatalogo</stream_name>
+        <column_name>cnpjCpfOrgao</column_name>
+        <stream_name>cnpjCpfOrgao</stream_name>
       </field>
       <field>
-        <column_name>objetoCompra</column_name>
-        <stream_name>objetoCompra</stream_name>
+        <column_name>codigoOrgaoVinculado</column_name>
+        <stream_name>codigoOrgaoVinculado</stream_name>
       </field>
       <field>
-        <column_name>descricaoDetalhadaItem</column_name>
-        <stream_name>descricaoDetalhadaItem</stream_name>
+        <column_name>cnpjCpfOrgaoVinculado</column_name>
+        <stream_name>cnpjCpfOrgaoVinculado</stream_name>
+      </field>
+      <field>
+        <column_name>nomeOrgaoVinculado</column_name>
+        <stream_name>nomeOrgaoVinculado</stream_name>
+      </field>
+      <field>
+        <column_name>codigoOrgaoSuperior</column_name>
+        <stream_name>codigoOrgaoSuperior</stream_name>
+      </field>
+      <field>
+        <column_name>cnpjCpfOrgaoSuperior</column_name>
+        <stream_name>cnpjCpfOrgaoSuperior</stream_name>
+      </field>
+      <field>
+        <column_name>nomeOrgaoSuperior</column_name>
+        <stream_name>nomeOrgaoSuperior</stream_name>
+      </field>
+      <field>
+        <column_name>codigoTipoAdministracao</column_name>
+        <stream_name>codigoTipoAdministracao</stream_name>
+      </field>
+      <field>
+        <column_name>nomeTipoAdministracao</column_name>
+        <stream_name>nomeTipoAdministracao</stream_name>
+      </field>
+      <field>
+        <column_name>poder</column_name>
+        <stream_name>poder</stream_name>
+      </field>
+      <field>
+        <column_name>esfera</column_name>
+        <stream_name>esfera</stream_name>
+      </field>
+      <field>
+        <column_name>usoSisg</column_name>
+        <stream_name>usoSisg</stream_name>
+      </field>
+      <field>
+        <column_name>statusOrgao</column_name>
+        <stream_name>statusOrgao</stream_name>
+      </field>
+      <field>
+        <column_name>dataHoraMovimento</column_name>
+        <stream_name>dataHoraMovimento</stream_name>
       </field>
     </fields>
     <attributes/>
@@ -891,8 +940,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>128</xloc>
-      <yloc>400</yloc>
+      <xloc>160</xloc>
+      <yloc>432</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -928,21 +977,8 @@
     </file>
     <fields>
       <field>
-        <name>idCompra</name>
-        <path>$.resultado[*].idCompra</path>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>idItemCompra</name>
-        <path>$.resultado[*].idItemCompra</path>
+        <name>codigoOrgao</name>
+        <path>$.resultado[*].codigoOrgao</path>
         <type>Integer</type>
         <format/>
         <currency/>
@@ -954,34 +990,8 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>numeroItemCompra</name>
-        <path>$.resultado[*].numeroItemCompra</path>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>codigoItemCatalogo</name>
-        <path>$.resultado[*].codigoItemCatalogo</path>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>objetoCompra</name>
-        <path>$.resultado[*].objetoCompra</path>
+        <name>nomeOrgao</name>
+        <path>$.resultado[*].nomeOrgao</path>
         <type>String</type>
         <format/>
         <currency/>
@@ -993,10 +1003,192 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>descricaoDetalhadaItem</name>
-        <path>$.resultado[*].descricaoDetalhadaItem</path>
+        <name>nomeMnemonicoOrgao</name>
+        <path>$.resultado[*].nomeMnemonicoOrgao</path>
         <type>String</type>
         <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>cnpjCpfOrgao</name>
+        <path>$.resultado[*].cnpjCpfOrgao</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>codigoOrgaoVinculado</name>
+        <path>$.resultado[*].codigoOrgaoVinculado</path>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>cnpjCpfOrgaoVinculado</name>
+        <path>$.resultado[*].cnpjCpfOrgaoVinculado</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>nomeOrgaoVinculado</name>
+        <path>$.resultado[*].nomeOrgaoVinculado</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>codigoOrgaoSuperior</name>
+        <path>$.resultado[*].codigoOrgaoSuperior</path>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>cnpjCpfOrgaoSuperior</name>
+        <path>$.resultado[*].cnpjCpfOrgaoSuperior</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>nomeOrgaoSuperior</name>
+        <path>$.resultado[*].nomeOrgaoSuperior</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>codigoTipoAdministracao</name>
+        <path>$.resultado[*].codigoTipoAdministracao</path>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>nomeTipoAdministracao</name>
+        <path>$.resultado[*].nomeTipoAdministracao</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>poder</name>
+        <path>$.resultado[*].poder</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>esfera</name>
+        <path>$.resultado[*].esfera</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>usoSisg</name>
+        <path>$.resultado[*].usoSisg</path>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>statusOrgao</name>
+        <path>$.resultado[*].statusOrgao</path>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>dataHoraMovimento</name>
+        <path>$.resultado[*].dataHoraMovimento</path>
+        <type>Date</type>
+        <format>yyyy-MM-dd</format>
         <currency/>
         <decimal/>
         <group/>
@@ -1027,8 +1219,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>701</xloc>
-      <yloc>390</yloc>
+      <xloc>736</xloc>
+      <yloc>432</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1111,8 +1303,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1117</xloc>
-      <yloc>246</yloc>
+      <xloc>1152</xloc>
+      <yloc>288</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1147,8 +1339,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>781</xloc>
-      <yloc>246</yloc>
+      <xloc>816</xloc>
+      <yloc>288</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1192,8 +1384,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>288</xloc>
-      <yloc>192</yloc>
+      <xloc>320</xloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1224,8 +1416,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>605</xloc>
-      <yloc>246</yloc>
+      <xloc>640</xloc>
+      <yloc>288</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1255,8 +1447,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>541</xloc>
-      <yloc>390</yloc>
+      <xloc>576</xloc>
+      <yloc>432</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1317,8 +1509,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>336</xloc>
-      <yloc>336</yloc>
+      <xloc>368</xloc>
+      <yloc>384</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1349,14 +1541,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>973</xloc>
-      <yloc>390</yloc>
+      <xloc>1008</xloc>
+      <yloc>432</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Table input</name>
-    <type>TableInput</type>
+    <name>Generate rows</name>
+    <type>RowGenerator</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1365,41 +1557,25 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>inputs</connection>
-    <sql>SELECT DISTINCT
-  idCompra
-FROM inputs.input_tbl_016_compra_material</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta>
-      <value-meta>
+    <fields>
+      <field>
+        <name>boolean</name>
         <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>idCompra</name>
-        <length>50</length>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>true</nullif>
+        <length>-1</length>
         <precision>-1</precision>
-        <origin>Table input</origin>
-        <comments>idCompra</comments>
-        <conversion_Mask/>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>pt_BR</date_format_locale>
-        <date_format_timezone>America/Sao_Paulo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-    </row-meta>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <limit>1</limit>
+    <never_ending>N</never_ending>
+    <interval_in_ms>5000</interval_in_ms>
+    <row_time_field>now</row_time_field>
+    <last_time_field>FiveSecondsAgo</last_time_field>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1409,8 +1585,52 @@ FROM inputs.input_tbl_016_compra_material</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>109</xloc>
-      <yloc>102</yloc>
+      <xloc>64</xloc>
+      <yloc>112</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Generate rows 2</name>
+    <type>RowGenerator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>boolean</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>false</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <limit>1</limit>
+    <never_ending>N</never_ending>
+    <interval_in_ms>5000</interval_in_ms>
+    <row_time_field>now</row_time_field>
+    <last_time_field>FiveSecondsAgo</last_time_field>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>224</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

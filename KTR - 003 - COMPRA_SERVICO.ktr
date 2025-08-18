@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>KTR - 002 - COMPRA_DETALHE_MATERIAL</name>
+    <name>KTR - 003 - COMPRA_SERVICO</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -427,9 +427,9 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2025/08/16 18:56:57.128</created_date>
+    <created_date>2025/08/17 18:13:10.126</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2025/08/16 18:56:57.128</modified_date>
+    <modified_date>2025/08/17 18:13:10.126</modified_date>
     <key_for_session_key>H4sIAAAAAAAA/wMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -505,6 +505,11 @@
   <order>
     <hop>
       <from>Add constants</from>
+      <to>Calculator</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Add constants</from>
       <to>Select values</to>
       <enabled>N</enabled>
     </hop>
@@ -560,6 +565,11 @@
     </hop>
     <hop>
       <from>Select values 2 2 2 3</from>
+      <to>INPUT_TBL_019_COMPRA_SERVICO</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select values 2 2 2 3</from>
       <to>Select values 3</to>
       <enabled>N</enabled>
     </hop>
@@ -571,16 +581,6 @@
     <hop>
       <from>Table input</from>
       <to>Add constants</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Add constants</from>
-      <to>Calculator</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Select values 2 2 2 3</from>
-      <to>INPUT_TBL_017_COMPRA_DETALHE_MATERIAL</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -603,7 +603,7 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>https://dadosabertos.compras.gov.br/modulo-pesquisa-preco/2_consultarMaterialDetalhe?tamanhoPagina=500&amp;idCompra=</nullif>
+        <nullif>https://dadosabertos.compras.gov.br/modulo-pesquisa-preco/3_consultarServico?tamanhoPagina=500&amp;codigoItemCatalogo=</nullif>
         <length>-1</length>
         <precision>-1</precision>
         <set_empty_string>N</set_empty_string>
@@ -618,8 +618,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>109</xloc>
-      <yloc>246</yloc>
+      <xloc>144</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -639,7 +639,7 @@
       <field_name>url_item</field_name>
       <calc_type>ADD</calc_type>
       <field_a>url</field_a>
-      <field_b>idCompra</field_b>
+      <field_b>codigoServico</field_b>
       <field_c/>
       <value_type>String</value_type>
       <value_length>-1</value_length>
@@ -659,8 +659,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>445</xloc>
-      <yloc>246</yloc>
+      <xloc>480</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -691,8 +691,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1293</xloc>
-      <yloc>390</yloc>
+      <xloc>1328</xloc>
+      <yloc>320</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -735,8 +735,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1293</xloc>
-      <yloc>246</yloc>
+      <xloc>1328</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -779,8 +779,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1133</xloc>
-      <yloc>390</yloc>
+      <xloc>1168</xloc>
+      <yloc>320</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -803,8 +803,8 @@
     <httpPassword>Encrypted </httpPassword>
     <proxyHost/>
     <proxyPort/>
-    <socketTimeout>10000</socketTimeout>
-    <connectionTimeout>10000</connectionTimeout>
+    <socketTimeout>120000</socketTimeout>
+    <connectionTimeout>12000</connectionTimeout>
     <closeIdleConnectionsTime>-1</closeIdleConnectionsTime>
     <lookup>
     </lookup>
@@ -823,13 +823,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>973</xloc>
-      <yloc>246</yloc>
+      <xloc>1008</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>INPUT_TBL_017_COMPRA_DETALHE_MATERIAL</name>
+    <name>INPUT_TBL_019_COMPRA_SERVICO</name>
     <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -841,7 +841,7 @@
     </partitioning>
     <connection>inputs</connection>
     <schema/>
-    <table>INPUT_TBL_017_COMPRA_DETALHE_MATERIAL</table>
+    <table>INPUT_TBL_019_COMPRA_SERVICO</table>
     <commit>1000</commit>
     <truncate>Y</truncate>
     <ignore_errors>N</ignore_errors>
@@ -866,20 +866,112 @@
         <stream_name>idItemCompra</stream_name>
       </field>
       <field>
+        <column_name>forma</column_name>
+        <stream_name>forma</stream_name>
+      </field>
+      <field>
+        <column_name>modalidade</column_name>
+        <stream_name>modalidade</stream_name>
+      </field>
+      <field>
+        <column_name>criterioJulgamento</column_name>
+        <stream_name>criterioJulgamento</stream_name>
+      </field>
+      <field>
         <column_name>numeroItemCompra</column_name>
         <stream_name>numeroItemCompra</stream_name>
+      </field>
+      <field>
+        <column_name>descricaoItem</column_name>
+        <stream_name>descricaoItem</stream_name>
       </field>
       <field>
         <column_name>codigoItemCatalogo</column_name>
         <stream_name>codigoItemCatalogo</stream_name>
       </field>
       <field>
-        <column_name>objetoCompra</column_name>
-        <stream_name>objetoCompra</stream_name>
+        <column_name>nomeUnidadeMedida</column_name>
+        <stream_name>nomeUnidadeMedida</stream_name>
       </field>
       <field>
-        <column_name>descricaoDetalhadaItem</column_name>
-        <stream_name>descricaoDetalhadaItem</stream_name>
+        <column_name>siglaUnidadeMedida</column_name>
+        <stream_name>siglaUnidadeMedida</stream_name>
+      </field>
+      <field>
+        <column_name>quantidade</column_name>
+        <stream_name>quantidade</stream_name>
+      </field>
+      <field>
+        <column_name>precoUnitario</column_name>
+        <stream_name>precoUnitario</stream_name>
+      </field>
+      <field>
+        <column_name>percentualMaiorDesconto</column_name>
+        <stream_name>percentualMaiorDesconto</stream_name>
+      </field>
+      <field>
+        <column_name>niFornecedor</column_name>
+        <stream_name>niFornecedor</stream_name>
+      </field>
+      <field>
+        <column_name>nomeFornecedor</column_name>
+        <stream_name>nomeFornecedor</stream_name>
+      </field>
+      <field>
+        <column_name>codigoUasg</column_name>
+        <stream_name>codigoUasg</stream_name>
+      </field>
+      <field>
+        <column_name>nomeUasg</column_name>
+        <stream_name>nomeUasg</stream_name>
+      </field>
+      <field>
+        <column_name>codigoMunicipio</column_name>
+        <stream_name>codigoMunicipio</stream_name>
+      </field>
+      <field>
+        <column_name>municipio</column_name>
+        <stream_name>municipio</stream_name>
+      </field>
+      <field>
+        <column_name>estado</column_name>
+        <stream_name>estado</stream_name>
+      </field>
+      <field>
+        <column_name>codigoOrgao</column_name>
+        <stream_name>codigoOrgao</stream_name>
+      </field>
+      <field>
+        <column_name>nomeOrgao</column_name>
+        <stream_name>nomeOrgao</stream_name>
+      </field>
+      <field>
+        <column_name>poder</column_name>
+        <stream_name>poder</stream_name>
+      </field>
+      <field>
+        <column_name>esfera</column_name>
+        <stream_name>esfera</stream_name>
+      </field>
+      <field>
+        <column_name>dataCompra</column_name>
+        <stream_name>dataCompra</stream_name>
+      </field>
+      <field>
+        <column_name>dataHoraAtualizacaoCompra</column_name>
+        <stream_name>dataHoraAtualizacaoCompra</stream_name>
+      </field>
+      <field>
+        <column_name>dataHoraAtualizacaoItem</column_name>
+        <stream_name>dataHoraAtualizacaoItem</stream_name>
+      </field>
+      <field>
+        <column_name>dataResultado</column_name>
+        <stream_name>dataResultado</stream_name>
+      </field>
+      <field>
+        <column_name>dataHoraAtualizacaoUasg</column_name>
+        <stream_name>dataHoraAtualizacaoUasg</stream_name>
       </field>
     </fields>
     <attributes/>
@@ -891,8 +983,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>128</xloc>
-      <yloc>400</yloc>
+      <xloc>144</xloc>
+      <yloc>320</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -954,9 +1046,61 @@
         <repeat>N</repeat>
       </field>
       <field>
+        <name>forma</name>
+        <path>$.resultado[*].forma</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>modalidade</name>
+        <path>$.resultado[*].modalidade</path>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>criterioJulgamento</name>
+        <path>$.resultado[*].criterioJulgamento</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
         <name>numeroItemCompra</name>
         <path>$.resultado[*].numeroItemCompra</path>
         <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>descricaoItem</name>
+        <path>$.resultado[*].descricaoItem</path>
+        <type>String</type>
         <format/>
         <currency/>
         <decimal/>
@@ -980,8 +1124,8 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>objetoCompra</name>
-        <path>$.resultado[*].objetoCompra</path>
+        <name>nomeUnidadeMedida</name>
+        <path>$.resultado[*].nomeUnidadeMedida</path>
         <type>String</type>
         <format/>
         <currency/>
@@ -993,10 +1137,257 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>descricaoDetalhadaItem</name>
-        <path>$.resultado[*].descricaoDetalhadaItem</path>
+        <name>siglaUnidadeMedida</name>
+        <path>$.resultado[*].siglaUnidadeMedida</path>
         <type>String</type>
         <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>quantidade</name>
+        <path>$.resultado[*].quantidade</path>
+        <type>Number</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>precoUnitario</name>
+        <path>$.resultado[*].precoUnitario</path>
+        <type>Number</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>percentualMaiorDesconto</name>
+        <path>$.resultado[*].percentualMaiorDesconto</path>
+        <type>Number</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>niFornecedor</name>
+        <path>$.resultado[*].niFornecedor</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>nomeFornecedor</name>
+        <path>$.resultado[*].nomeFornecedor</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>codigoUasg</name>
+        <path>$.resultado[*].codigoUasg</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>nomeUasg</name>
+        <path>$.resultado[*].nomeUasg</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>codigoMunicipio</name>
+        <path>$.resultado[*].codigoMunicipio</path>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>municipio</name>
+        <path>$.resultado[*].municipio</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>estado</name>
+        <path>$.resultado[*].estado</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>codigoOrgao</name>
+        <path>$.resultado[*].codigoOrgao</path>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>nomeOrgao</name>
+        <path>$.resultado[*].nomeOrgao</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>poder</name>
+        <path>$.resultado[*].poder</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>esfera</name>
+        <path>$.resultado[*].esfera</path>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>dataCompra</name>
+        <path>$.resultado[*].dataCompra</path>
+        <type>Date</type>
+        <format>yyyy-MM-dd</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>dataHoraAtualizacaoCompra</name>
+        <path>$.resultado[*].dataHoraAtualizacaoCompra</path>
+        <type>Date</type>
+        <format>yyyy-MM-dd</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>dataHoraAtualizacaoItem</name>
+        <path>$.resultado[*].dataHoraAtualizacaoItem</path>
+        <type>Date</type>
+        <format>yyyy-MM-dd</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>dataResultado</name>
+        <path>$.resultado[*].dataResultado</path>
+        <type>Date</type>
+        <format>yyyy-MM-dd</format>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>dataHoraAtualizacaoUasg</name>
+        <path>$.resultado[*].dataHoraAtualizacaoUasg</path>
+        <type>Date</type>
+        <format>yyyy-MM-dd</format>
         <currency/>
         <decimal/>
         <group/>
@@ -1027,8 +1418,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>701</xloc>
-      <yloc>390</yloc>
+      <xloc>736</xloc>
+      <yloc>320</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1111,8 +1502,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1117</xloc>
-      <yloc>246</yloc>
+      <xloc>1152</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1147,8 +1538,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>781</xloc>
-      <yloc>246</yloc>
+      <xloc>816</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1192,8 +1583,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>288</xloc>
-      <yloc>192</yloc>
+      <xloc>320</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1224,8 +1615,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>605</xloc>
-      <yloc>246</yloc>
+      <xloc>640</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1255,8 +1646,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>541</xloc>
-      <yloc>390</yloc>
+      <xloc>576</xloc>
+      <yloc>320</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1317,8 +1708,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>336</xloc>
-      <yloc>336</yloc>
+      <xloc>368</xloc>
+      <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1349,8 +1740,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>973</xloc>
-      <yloc>390</yloc>
+      <xloc>1008</xloc>
+      <yloc>320</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1366,9 +1757,9 @@
       <schema_name/>
     </partitioning>
     <connection>inputs</connection>
-    <sql>SELECT DISTINCT
-  idCompra
-FROM inputs.input_tbl_016_compra_material</sql>
+    <sql>SELECT
+  codigoServico
+FROM inputs.input_tbl_013_item_servico</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -1377,14 +1768,14 @@ FROM inputs.input_tbl_016_compra_material</sql>
     <cached_row_meta_active>N</cached_row_meta_active>
     <row-meta>
       <value-meta>
-        <type>String</type>
+        <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>idCompra</name>
-        <length>50</length>
-        <precision>-1</precision>
+        <name>codigoServico</name>
+        <length>9</length>
+        <precision>0</precision>
         <origin>Table input</origin>
-        <comments>idCompra</comments>
-        <conversion_Mask/>
+        <comments>codigoServico</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>,</decimal_symbol>
         <grouping_symbol>.</grouping_symbol>
         <currency_symbol/>
@@ -1409,8 +1800,8 @@ FROM inputs.input_tbl_016_compra_material</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>109</xloc>
-      <yloc>102</yloc>
+      <xloc>144</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
