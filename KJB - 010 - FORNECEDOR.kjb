@@ -315,7 +315,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>C:\Users\kauã\Desktop\gerenciamento de banco de dados\trab_03\KTR - 001 - FORNECEDOR.ktr</filename>
+      <filename>${Internal.Entry.Current.Directory}\KTR - 001 - FORNECEDOR.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
